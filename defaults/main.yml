@@ -1,2 +1,3 @@
 ---
 vault_promote_var_to_extract: {}
+vault_promote_no_log: true
