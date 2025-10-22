@@ -1,0 +1,30 @@
+---
+# Role: vault_prep
+# Purpose: Promote vault variables as facts, map coliding variables and gather facts safely
+
+- name: Promote hosts vault variable as fact
+  ansible.builtin.set_fact:
+    vault_host: "{{ vault_host }}"
+  no_log: true
+
+- name: Promote vault_group from all matched groups
+  ansible.builtin.set_fact:
+    vault_group: "{{ vault_group | default({}) | combine(resolved_group, recursive=True) }}"
+  vars:
+    resolved_group: "{{ lookup('vars', 'vault_' ~ (item | replace('-', '_')) ~ '_group') }}"
+  loop: "{{ group_names }}"
+  when: ('vault_' ~ (item | replace('-', '_')) ~ '_group') in vars
+  no_log: false
+
+- name: Evaluate variable to map
+  ansible.builtin.set_fact:
+    "{{ item.key }}": "{{ lookup('vars', item.value) }}"
+  loop: "{{ vault_prep_var_to_extract | dict2items | flatten }}"
+
+- name: Flatten variable into standalone vars
+  ansible.builtin.set_fact:
+    "{{ item.key }}": "{{  item.value }}"
+  loop: "{{ vault_prep_var_to_extract | map('extract', vars) | map('dict2items') | flatten }}"
+
+- name: Gather facts after vault promotion
+  ansible.builtin.setup:

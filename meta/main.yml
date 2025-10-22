@@ -1,0 +1,16 @@
+---
+galaxy_info:
+  role_name: vault_promote
+  author: chadek
+  description: ansible role to promote vault variable as fact
+  company: Green-house
+  license: license GPL-3.0-only
+  min_ansible_version: "2.4"
+  galaxy_tags:
+    - bitwarden
+    - vault
+
+dependencies:
+  []
+  # List your role dependencies here, one per line. Be sure to remove the '[]' above,
+  # if you add dependencies to this list.
