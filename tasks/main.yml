@@ -5,7 +5,7 @@
 - name: Promote hosts vault variable as fact
   ansible.builtin.set_fact:
     vault_host: "{{ vault_host }}"
-  no_log: true
+  no_log: "{{ vault_promote_no_log }}"
 
 - name: Promote vault_group from all matched groups
   ansible.builtin.set_fact:
@@ -14,7 +14,7 @@
     resolved_group: "{{ lookup('vars', 'vault_' ~ (item | replace('-', '_')) ~ '_group') }}"
   loop: "{{ group_names }}"
   when: ('vault_' ~ (item | replace('-', '_')) ~ '_group') in vars
-  no_log: false
+  no_log: "{{ vault_promote_no_log }}"
 
 - name: Evaluate variable to map
   ansible.builtin.set_fact:
@@ -25,6 +25,7 @@
   ansible.builtin.set_fact:
     "{{ item.key }}": "{{  item.value }}"
   loop: "{{ vault_promote_var_to_extract | map('extract', vars) | map('dict2items') | flatten }}"
+  no_log: "{{ vault_promote_no_log }}"
 
 - name: Gather facts after vault promotion
   ansible.builtin.setup:
