@@ -1,5 +1,5 @@
 ---
-# Role: vault_prep
+# Role: vault_promote
 # Purpose: Promote vault variables as facts, map coliding variables and gather facts safely
 
 - name: Promote hosts vault variable as fact
@@ -19,12 +19,12 @@
 - name: Evaluate variable to map
   ansible.builtin.set_fact:
     "{{ item.key }}": "{{ lookup('vars', item.value) }}"
-  loop: "{{ vault_prep_var_to_extract | dict2items | flatten }}"
+  loop: "{{ vault_promote_var_to_extract | dict2items | flatten }}"
 
 - name: Flatten variable into standalone vars
   ansible.builtin.set_fact:
     "{{ item.key }}": "{{  item.value }}"
-  loop: "{{ vault_prep_var_to_extract | map('extract', vars) | map('dict2items') | flatten }}"
+  loop: "{{ vault_promote_var_to_extract | map('extract', vars) | map('dict2items') | flatten }}"
 
 - name: Gather facts after vault promotion
   ansible.builtin.setup:
