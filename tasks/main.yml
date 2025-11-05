@@ -2,18 +2,9 @@
 # Role: vault_promote
 # Purpose: Promote vault variables as facts, map coliding variables and gather facts safely
 
-- name: Promote hosts vault variable as fact
+- name: Promote all vault variables as vault_collections fact
   ansible.builtin.set_fact:
-    vault_host: "{{ vault_host }}"
-  no_log: "{{ vault_promote_no_log }}"
-
-- name: Promote vault_group from all matched groups
-  ansible.builtin.set_fact:
-    vault_group: "{{ vault_group | default({}) | combine(resolved_group, recursive=True) }}"
-  vars:
-    resolved_group: "{{ lookup('vars', 'vault_' ~ (item | replace('-', '_')) ~ '_group') }}"
-  loop: "{{ group_names }}"
-  when: ('vault_' ~ (item | replace('-', '_')) ~ '_group') in vars
+    vault_collections: "{{ lookup('community.general.bitwarden', '', 'collections') | flatten }}"
   no_log: "{{ vault_promote_no_log }}"
 
 - name: Evaluate variable to map
