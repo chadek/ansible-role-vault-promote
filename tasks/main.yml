@@ -19,7 +19,7 @@
 - name: Evaluate variable to map
   ansible.builtin.set_fact:
     "{{ vault_promote_tmp_prefix }}{{ index }}": "{{ lookup('vars', item) }}"
-  loop: "{{ vault_promote_var_to_extract}}"
+  loop: "{{ vault_promote_var_to_extract }}"
   loop_control:
     index_var: index
 
