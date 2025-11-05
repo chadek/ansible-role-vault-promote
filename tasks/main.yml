@@ -2,9 +2,9 @@
 # Role: vault_promote
 # Purpose: Promote vault variables as facts, map coliding variables and gather facts safely
 
-- name: Promote all vault variables as vault_collections fact
+- name: Promote hosts vault variable as fact
   ansible.builtin.set_fact:
-    vault_collections: "{{ lookup('community.general.bitwarden', '', 'collections') | flatten }}"
+    vault_collections: "{{ vault_collections }}"
   no_log: "{{ vault_promote_no_log }}"
 
 - name: Evaluate variable to map
