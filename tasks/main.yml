@@ -18,8 +18,10 @@
 
 - name: Evaluate variable to map
   ansible.builtin.set_fact:
-    "{{ item.key }}": "{{ lookup('vars', item.value) }}"
-  loop: "{{ vault_promote_var_to_extract | dict2items | flatten }}"
+    "{{ vault_promote_tmp_prefix }}{{ index }}": "{{ lookup('vars', item) }}"
+  loop: "{{ vault_promote_var_to_extract}}"
+  loop_control:
+    index_var: index
 
 - name: Flatten variable into standalone vars
   ansible.builtin.set_fact:

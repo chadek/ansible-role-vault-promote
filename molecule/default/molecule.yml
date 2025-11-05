@@ -29,6 +29,6 @@ provisioner:
           nginx_certbot_port: 8080
         vault_promote_no_log: false
         vault_promote_var_to_extract:
-          nginx_certbot: "nginx_certbot_appname"
+          - "nginx_certbot_appname"
 verifier:
   name: ansible
