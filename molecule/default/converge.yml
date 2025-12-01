@@ -14,4 +14,4 @@
   tasks:
     - name: "Include vault-promote role"
       ansible.builtin.include_role:
-        name: ansible-role-vault-promote
+        name: chadek.vault_promote
