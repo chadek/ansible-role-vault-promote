@@ -20,9 +20,9 @@ provisioner:
   inventory:
     host_vars:
       vault-promote:
-        vault_host: 
+        vault_host:
           test_host: "secret_stuff"
-        vault_all_group: 
+        vault_all_group:
           group_test_host: "group_secret_stuff"
         nginx_certbot_appname:
           nginx_certbot_domain_name: 'some.url'
