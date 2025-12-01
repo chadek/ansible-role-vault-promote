@@ -2,3 +2,4 @@
 vault_promote_var_to_extract: []
 vault_promote_no_log: true
 vault_promote_tmp_prefix: "vault_promote_tmp"
+vault_collections: ""
